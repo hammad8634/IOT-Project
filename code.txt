@@ -1,0 +1,27 @@
+//soil moisture sensor
+
+const int soil_pin
+soil_pin = A1;
+int led_soil=10;
+
+void setup()
+ {
+  Serial.begin(9600);
+  pinMode(led_soil, OUTPUT);
+}
+
+void loop()
+ {
+  int moisture = analogRead(soil_pin);
+  Serial.println(moisture);
+   if(moisture > 1000)
+  {
+    digitalWrite(led_soil, HIGH);
+    delay(300);
+   }
+else
+{
+  digitalWrite(led_soil, LOW);
+  delay(300);
+}
+}
