@@ -1,27 +1,63 @@
-//soil moisture sensor
+#include <AFMotor.h>
+#include "DHT.h" 
 
-const int soil_pin
-soil_pin = A1;
-int led_soil=10;
+#define DHTPIN A0
+#define DHTTYPE DHT11 
 
-void setup()
- {
+AF_DCMotor motor1(1);
+AF_DCMotor motor2(2);
+AF_DCMotor motor3(3);
+
+DHT dht(DHTPIN, DHTTYPE);
+
+int sensorPin = A5;
+int sensorValue;
+int limit = 250;
+int templimit = 18;
+int humlimit = 60;
+
+void setup() {
   Serial.begin(9600);
-  pinMode(led_soil, OUTPUT);
+  dht.begin();
 }
 
-void loop()
- {
-  int moisture = analogRead(soil_pin);
-  Serial.println(moisture);
-   if(moisture > 1000)
-  {
-    digitalWrite(led_soil, HIGH);
-    delay(300);
-   }
-else
-{
-  digitalWrite(led_soil, LOW);
-  delay(300);
-}
+void loop() {
+  float humidity = dht.readHumidity(); 
+  float temp = dht.readTemperature(); 
+  sensorValue = analogRead(sensorPin);
+
+  Serial.print("Temp is ");
+  Serial.print(temp);
+  Serial.println(" *C");
+
+  Serial.print("Humidity in % is: ");
+  Serial.print(humidity);
+  Serial.print("%\t");
+
+  motor1.setSpeed(50);
+  motor2.setSpeed(150);
+  motor3.setSpeed(150);
+
+  Serial.println("Soil Moisture Value:");
+  Serial.println(sensorValue);
+
+  if (sensorValue > limit) {
+    motor1.run(FORWARD);
+  } else {S
+    motor1.run(RELEASE);
+  }
+
+  if (temp > templimit) {
+    motor3.run(FORWARD);
+  } else {
+    motor3.run(RELEASE);
+  }
+
+  if (humidity < humlimit) {
+    motor2.run(FORWARD);
+  } else {
+    motor2.run(RELEASE);
+  }
+
+  delay(10000);
 }
