@@ -33,7 +33,7 @@ export default function Sensors({
 			temperature <= temperatureLimit + 4
 		) {
 			setTemperatureColor('orange');
-		} else if (temperature < maxTemperature - 4) {
+		} else if (temperature < temperatureLimit - 4) {
 			setTemperatureColor('green');
 		} else {
 			setTemperatureColor('red');
@@ -49,9 +49,9 @@ export default function Sensors({
 		}
 		setHumidityWidth((humidity / maxHumidity) * 100);
 
-		if (moisture <= moistureLimit + 20 && moisture >= moistureLimit - 20) {
+		if (moisture >= moistureLimit - 20 && moisture <= moistureLimit + 20) {
 			setMoistureColor('orange');
-		} else if (moisture > moistureLimit + 20) {
+		} else if (moisture < moistureLimit - 20) {
 			setMoistureColor('green');
 		} else {
 			setMoistureColor('red');

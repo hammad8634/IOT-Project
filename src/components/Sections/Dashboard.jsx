@@ -30,7 +30,7 @@ export default function Projects() {
 		} else {
 			setFanOn(false);
 		}
-		if (moistureValue < moistureLimit) {
+		if (moistureValue > moistureLimit) {
 			setWaterPumpOn(true);
 		} else {
 			setWaterPumpOn(false);
